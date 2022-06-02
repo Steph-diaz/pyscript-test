@@ -24,40 +24,169 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
   <meta name="theme-color" content="#fafafa">
+
+  <py-env>
+    - pandas
+    - matplotlib
+    - paths:
+      - ./python/validation.py
+      - ./python/loblaws-mintel_upc_duplicates.csv
+  </py-env>
 </head>
 
 <body>
 
   <!-- Add your site or application content here -->
-  <h1 class="text-danger">Hello</h1>
+  <h1 class="text-danger text-center mb-5"
+      style="margin-bottom: 25px">Mintel - FLAIME Validation</h1>
   <h4 id="print"></h4>
   <p id="print1"></p>
 
-  <py-script>
-    pyscript.write('print', "Let's compute π:")
-    def compute_pi(n):
-        pi = 2
-        for i in range(1,n):
-            pi *= 4 * i ** 2 / (4 * i ** 2 - 1)
-        return pi
 
-    pi = compute_pi(100000)
-    s = f"π is approximately {pi:.3f}"
-    pyscript.write('print1', s)
+  <section class="bg-panel bg-dark">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Mintel</h3>
+            </div>
+            <div class="panel-body">
+              Number of products: 7579
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Loblaws</h3>
+            </div>
+            <div class="panel-body">
+              <p>Number of products: 19274</p>
+              <p>Match to Mintel: 1857</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Walmart</h3>
+            </div>
+            <div class="panel-body">
+              <p>Number of products: 12181</p>
+              <p>Match to Mintel: 1293</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">GroceryGateway</h3>
+            </div>
+            <div class="panel-body">
+              <p>Coming soon...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    print('This is using the print() function')
+  <section>
+    <div class="container">
+      <h2 class="text-center" style="margin-bottom: 20px">
+        Loblaws Validation
+      </h2>
+
+      <div class="row" style="display: flex; justify-content: center; padding: 25px 0 5px 0;">
+        <div class="col-md-2">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title text-center">Serving Size</h3>
+            </div>
+            <div class="panel-body">
+              Coming soon ...
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <h3 class="panel-title text-center">Calories</h3>
+            </div>
+            <div class="panel-body">
+              <p>Match: <span id="cal-match"></span></p>
+              <p>No Match: <span id="cal-noM"></span></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title text-center">Saturated Fat</h3>
+            </div>
+            <div class="panel-body">
+              <p>Match: <span id="sat-match"></span></p>
+              <p>No Match: <span id="sat-noM"></span></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="panel panel-warning">
+            <div class="panel-heading">
+              <h3 class="panel-title text-center">Sodium</h3>
+            </div>
+            <div class="panel-body">
+              <p>Match: <span id="sod-match"></span></p>
+              <p>No Match: <span id="sod-noM"></span></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="panel panel-danger">
+            <div class="panel-heading">
+              <h3 class="panel-title text-center">Sugar</h3>
+            </div>
+            <div class="panel-body">
+              <p>Coming Soon ...</p>
+<!--              <p>Match: <span id="sug-match"></span></p>-->
+<!--              <p>No Match: <span id="sug-noM"></span></p>-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <table id="table" class="table"></table>
+
+  <py-script src="./python/validation.py">
+<!--    pyscript.write('print', "Let's compute π:")-->
+<!--    def compute_pi(n):-->
+<!--        pi = 2-->
+<!--        for i in range(1,n):-->
+<!--            pi *= 4 * i ** 2 / (4 * i ** 2 - 1)-->
+<!--        return pi-->
+
+<!--    pi = compute_pi(100000)-->
+<!--    s = f"π is approximately {pi:.3f}"-->
+<!--    pyscript.write('print1', s)-->
+
+<!--    print('This is using the print() function')-->
   </py-script>
 
   <script src="js/vendor/modernizr-3.11.2.min.js"></script>
   <script src="js/plugins.js"></script>
   <script src="js/main.js"></script>
 
-  <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-  <script>
-    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
-    ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')
-  </script>
-  <script src="https://www.google-analytics.com/analytics.js" async></script>
+<!--  &lt;!&ndash; Google Analytics: change UA-XXXXX-Y to be your site's ID. &ndash;&gt;-->
+<!--  <script>-->
+<!--    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;-->
+<!--    ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')-->
+<!--  </script>-->
+<!--  <script src="https://www.google-analytics.com/analytics.js" async></script>-->
 </body>
 
 </html>
