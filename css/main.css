@@ -87,8 +87,8 @@ textarea {
    Author's custom styles
    ========================================================================== */
 .bg-panel{
-  background-color: darkslategrey;
-  padding: 25px 0 5px 0;
+  background-color: #7b8a99;
+  padding-top: 20px;
 }
 /* ==========================================================================
    Helper classes

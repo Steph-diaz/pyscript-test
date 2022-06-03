@@ -43,12 +43,12 @@
   <p id="print1"></p>
 
 
-  <section class="bg-panel bg-dark">
-    <div class="container">
+  <section>
+    <div class="container bg-panel">
       <div class="row">
         <div class="col-md-3">
           <div class="panel panel-default">
-            <div class="panel-heading">
+            <div class="panel-heading text-center" style="background-color: #555555; color: white">
               <h3 class="panel-title">Mintel</h3>
             </div>
             <div class="panel-body">
@@ -58,7 +58,7 @@
         </div>
         <div class="col-md-3">
           <div class="panel panel-default">
-            <div class="panel-heading">
+            <div class="panel-heading text-center" style="background-color: #555555; color: white">
               <h3 class="panel-title">Loblaws</h3>
             </div>
             <div class="panel-body">
@@ -69,7 +69,7 @@
         </div>
         <div class="col-md-3">
           <div class="panel panel-default">
-            <div class="panel-heading">
+            <div class="panel-heading text-center" style="background-color: #555555; color: white">
               <h3 class="panel-title">Walmart</h3>
             </div>
             <div class="panel-body">
@@ -80,7 +80,7 @@
         </div>
         <div class="col-md-3">
           <div class="panel panel-default">
-            <div class="panel-heading">
+            <div class="panel-heading text-center" style="background-color: #555555; color: white">
               <h3 class="panel-title">GroceryGateway</h3>
             </div>
             <div class="panel-body">
@@ -112,22 +112,22 @@
         <div class="col-md-2">
           <div class="panel panel-success">
             <div class="panel-heading">
-              <h3 class="panel-title text-center">Calories</h3>
+              <h3 class="panel-title text-center">Saturated Fat</h3>
             </div>
             <div class="panel-body">
-              <p>Match: <span id="cal-match"></span></p>
-              <p>No Match: <span id="cal-noM"></span></p>
+              <p>Match: <span id="sat-match"></span></p>
+              <p>No Match: <span id="sat-noM"></span></p>
             </div>
           </div>
         </div>
         <div class="col-md-2">
           <div class="panel panel-info">
             <div class="panel-heading">
-              <h3 class="panel-title text-center">Saturated Fat</h3>
+              <h3 class="panel-title text-center">Calories</h3>
             </div>
             <div class="panel-body">
-              <p>Match: <span id="sat-match"></span></p>
-              <p>No Match: <span id="sat-noM"></span></p>
+              <p>Match: <span id="cal-match"></span></p>
+              <p>No Match: <span id="cal-noM"></span></p>
             </div>
           </div>
         </div>
@@ -158,9 +158,15 @@
     </div>
 
     <div class="container">
-      <div id="plot" style="display: flex; justify-content: center">
+      <div class="row">
+        <div id="plot" class="col-md-6"
+             style="display: flex; justify-content: center">
 
+        </div>
+        <div id="plot2" class="col-md-6"
+             style="display: flex; justify-content: center"></div>
       </div>
+
     </div>
   </section>
 

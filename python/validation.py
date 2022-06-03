@@ -1,23 +1,7 @@
-# pyscript.write('print', "Let's compute π:")
-#
-#
-# def compute_pi(n):
-#   pi = 2
-#   for i in range(1, n):
-#     pi *= 4 * i ** 2 / (4 * i ** 2 - 1)
-#   return pi
-#
-#
-# pi = compute_pi(100000)
-# s = f"π is approximately {pi:.3f}"
-# pyscript.write('print1', s)
-#
-# print('This is using the print() function')
-
-
 import pandas as pd
 # import re
 import matplotlib.pyplot as plt
+import numpy as np
 
 to_drop = ['id', 'created', 'modified', 'product_code', 'id_x', 'created_x', 'modified_x', 'category_id',
            'id_y', 'created_y', 'modified_y']
@@ -74,16 +58,18 @@ pyscript.write('sod-noM', sodium_nomatch)
 plot_data = {'match': [satfat_match, calories_match, sodium_match], 'no match': [satfat_nomatch, calories_nomatch, sodium_nomatch]}
 satfat = pd.DataFrame(plot_data, index = ['sat_fat', 'calories', 'sodium'])
 
+###### Pandas ploting does seem to work
 # pyscript.write('plot', satfat.plot.bar(rot=0))
 # import matplotlib.pyplot as plt
-import numpy as np
 
-labels = ['sat_fat', 'calories', 'sodium']
+
+# Bar Plot --------------------------------------------------------
+labels = ['Sat Fat', 'calories', 'sodium']
 match = [satfat_match, calories_match, sodium_match]
 no_match = [satfat_nomatch, calories_nomatch, sodium_nomatch]
 
 x = np.arange(len(labels))  # the label locations
-width = 0.35  # the width of the bars
+width = 0.25  # the width of the bars
 
 fig, ax = plt.subplots()
 rects1 = ax.bar(x - width/2, match, width, label='Match', color= 'forestgreen')
@@ -103,7 +89,96 @@ ax.spines['right'].set_visible(False)
 ax.bar_label(rects1, padding=3)
 ax.bar_label(rects2, padding=3)
 
+fig.set_figheight(5)
+fig.set_figwidth(5)
+
 fig.tight_layout()
 
 # plt.show()
 pyscript.write('plot', fig)
+
+# ------------------------------------------------------------------------------
+# PORCENTAGES
+
+## Creating porcentages for loblaws
+total_match_loblaws = 1857
+
+# calories
+lob_percent_cal_match = round((calories_match / total_match_loblaws)*100, 2)
+lob_percent_cal_nomatch = round((calories_nomatch / total_match_loblaws)*100, 2)
+
+# saturated fat
+lob_percent_sat_match = round((satfat_match / total_match_loblaws)*100, 2)
+lob_percent_sat_nomatch = round((satfat_nomatch / total_match_loblaws)*100, 2)
+
+# saturated fat
+lob_percent_sod_match = round((sodium_match / total_match_loblaws)*100, 2)
+lob_percent_sod_nomatch = round((sodium_nomatch / total_match_loblaws)*100, 2)
+
+# Donut plots for percentages -------------------------------------------
+
+# Data for plot 1 ----
+match_name = 'Match: ' + str(lob_percent_sat_match) + '%'
+nomatch_name = 'No Match: ' + str(lob_percent_sat_nomatch) + '%'
+
+names = [match_name, nomatch_name]
+size = [lob_percent_sat_match, lob_percent_sat_nomatch]
+
+# Create a circle at the center of the plot
+my_circle = plt.Circle((0, 0), 0.7, color='white')
+
+# position 1
+plt.subplot(3, 1, 1)
+plt.rcParams['text.color'] = 'grey'
+plt.pie(size, labels=names, colors=['forestgreen', 'darkred'],
+        wedgeprops={'linewidth': 7, 'edgecolor': 'white'})
+p = plt.gcf()
+p.gca().add_artist(my_circle)
+plt.title('Saturated fat', color='k')
+
+# Data for plot 2 ----
+match_name = 'Match: ' + str(lob_percent_cal_match) + '%'
+nomatch_name = 'No Match: ' + str(lob_percent_cal_nomatch) + '%'
+
+names = [match_name, nomatch_name]
+size = [lob_percent_cal_match, lob_percent_cal_nomatch]
+
+my_circle = plt.Circle((0, 0), 0.7, color='white')
+
+# position 2
+plt.subplot(3, 1, 2)
+plt.rcParams['text.color'] = 'grey'
+plt.pie(size, labels=names, colors=['forestgreen', 'darkred'],
+        wedgeprops={'linewidth': 7, 'edgecolor': 'white'})
+p = plt.gcf()
+p.gca().add_artist(my_circle)
+plt.title('Calories', color='k')
+
+# Data for plot 3 ----
+match_name = 'Match: ' + str(lob_percent_sod_match) + '%'
+nomatch_name = 'No Match: ' + str(lob_percent_sod_nomatch) + '%'
+
+names = [match_name, nomatch_name]
+size = [lob_percent_sod_match, lob_percent_sod_nomatch]
+
+my_circle = plt.Circle((0, 0), 0.7, color='white')
+
+# position 2
+plt.subplot(3, 1, 3)
+plt.rcParams['text.color'] = 'grey'
+plt.pie(size, labels=names, colors=['forestgreen', 'darkred'],
+        wedgeprops={'linewidth': 7, 'edgecolor': 'white'})
+p = plt.gcf()
+p.gca().add_artist(my_circle)
+plt.title('Sodium', color='k')
+
+
+plt.subplots_adjust(left=0.2,
+                    bottom=0.2,
+                    right=0.8,
+                    top=0.9,
+                    wspace=0.9,
+                    hspace=0.4)
+
+
+pyscript.write('plot2', p)
