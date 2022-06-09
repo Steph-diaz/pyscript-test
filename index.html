@@ -29,26 +29,33 @@
     - pandas
     - matplotlib
     - paths:
-      - ./python/validation.py
+      - ./python/validation_2.py
       - ./python/loblaws-mintel_upc_duplicates.csv
+      - ./python/Matches(name_incl)_loblaws-mintel_upc_duplicates.csv
+      - ./python/Matches(name_incl)_walmart-mintel_upc_duplicates.csv
   </py-env>
 </head>
 
 <body>
 
-  <!-- Add your site or application content here -->
-  <h1 class="text-danger text-center mb-5"
-      style="margin-bottom: 25px">Mintel - FLAIME Validation</h1>
-  <h4 id="print"></h4>
-  <p id="print1"></p>
+  <!-- Add your site or application content here #503b46 -->
+  <section style="background-color: #D8D1CD ; color: maroon">
+    <div class="container">
+      <h1 class="text-center">Mintel - FLAIME Validation</h1>
+    </div>
+
+  </section>
+<!--  <h4 id="print"></h4>-->
+<!--  <p id="print1"></p>-->
 
 
-  <section>
-    <div class="container bg-panel">
+  <section style="padding-top: 20px; background-color: #D8D1CD">
+    <div class="container">
       <div class="row">
         <div class="col-md-3">
           <div class="panel panel-default">
-            <div class="panel-heading text-center" style="background-color: #555555; color: white">
+            <div class="panel-heading text-center"
+                 style="background-color: dimgrey; color: ghostwhite;">
               <h3 class="panel-title">Mintel</h3>
             </div>
             <div class="panel-body">
@@ -58,7 +65,8 @@
         </div>
         <div class="col-md-3">
           <div class="panel panel-default">
-            <div class="panel-heading text-center" style="background-color: #555555; color: white">
+            <div class="panel-heading text-center"
+                 style="background-color: dimgrey; color: ghostwhite;">
               <h3 class="panel-title">Loblaws</h3>
             </div>
             <div class="panel-body">
@@ -69,7 +77,8 @@
         </div>
         <div class="col-md-3">
           <div class="panel panel-default">
-            <div class="panel-heading text-center" style="background-color: #555555; color: white">
+            <div class="panel-heading text-center"
+                 style="background-color: dimgrey; color: ghostwhite;">
               <h3 class="panel-title">Walmart</h3>
             </div>
             <div class="panel-body">
@@ -80,7 +89,8 @@
         </div>
         <div class="col-md-3">
           <div class="panel panel-default">
-            <div class="panel-heading text-center" style="background-color: #555555; color: white">
+            <div class="panel-heading text-center"
+                 style="background-color: dimgrey; color: ghostwhite;">
               <h3 class="panel-title">GroceryGateway</h3>
             </div>
             <div class="panel-body">
@@ -92,26 +102,30 @@
     </div>
   </section>
 
-  <section>
+<!--  Loblaws Section ******************************** -->
+<!--   #3b5050 -->
+
+  <section style="background-color: #486980; padding-bottom: 20px">
     <div class="container">
-      <h2 class="text-center" style="margin-bottom: 20px">
+      <h2 class="text-center" style="margin-bottom: 20px; color: burlywood">
         Loblaws Validation
       </h2>
 
       <div class="row" style="display: flex; justify-content: center; padding: 25px 0 5px 0;">
         <div class="col-md-2">
-          <div class="panel panel-primary">
-            <div class="panel-heading">
+          <div class="panel panel-default">
+            <div class="panel-heading" style="color: #3B4650; background-color: #D8D1CD;">
               <h3 class="panel-title text-center">Serving Size</h3>
             </div>
             <div class="panel-body">
-              Coming soon ...
+              <p>Match: <span id="size-match"></span></p>
+              <p>No Match: <span id="size-noM"></span></p>
             </div>
           </div>
         </div>
         <div class="col-md-2">
           <div class="panel panel-success">
-            <div class="panel-heading">
+            <div class="panel-heading" style="color: #3B4650; background-color: #D8D1CD;">
               <h3 class="panel-title text-center">Saturated Fat</h3>
             </div>
             <div class="panel-body">
@@ -122,7 +136,7 @@
         </div>
         <div class="col-md-2">
           <div class="panel panel-info">
-            <div class="panel-heading">
+            <div class="panel-heading" style="color: #3B4650; background-color: #D8D1CD;">
               <h3 class="panel-title text-center">Calories</h3>
             </div>
             <div class="panel-body">
@@ -133,7 +147,7 @@
         </div>
         <div class="col-md-2">
           <div class="panel panel-warning">
-            <div class="panel-heading">
+            <div class="panel-heading" style="color: #3B4650; background-color: #D8D1CD;">
               <h3 class="panel-title text-center">Sodium</h3>
             </div>
             <div class="panel-body">
@@ -144,7 +158,7 @@
         </div>
         <div class="col-md-2">
           <div class="panel panel-danger">
-            <div class="panel-heading">
+            <div class="panel-heading" style="color: #3B4650; background-color: #D8D1CD;">
               <h3 class="panel-title text-center">Sugar</h3>
             </div>
             <div class="panel-body">
@@ -171,10 +185,92 @@
   </section>
 
 
+  <!--  Walmart Section ******************************** -->
 
-  <table id="table" class="table"></table>
+  <section style="background-color: #3b4650;">
+    <div class="container">
+      <h2 class="text-center" style="margin-bottom: 20px; color: burlywood">
+        Walmart Validation
+      </h2>
 
-  <py-script src="./python/validation.py">
+      <div class="row" style="display: flex; justify-content: center; padding: 25px 0 5px 0;">
+        <div class="col-md-2">
+          <div class="panel panel-primary">
+            <div class="panel-heading" style="color: #3B4650; background-color: #D8D1CD;">
+              <h3 class="panel-title text-center">Serving Size</h3>
+            </div>
+            <div class="panel-body">
+              <p>Match: <span id="w-size-match"></span></p>
+              <p>No Match: <span id="w-size-noM"></span></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="panel panel-success">
+            <div class="panel-heading" style="color: #3B4650; background-color: #D8D1CD;">
+              <h3 class="panel-title text-center">Saturated Fat</h3>
+            </div>
+            <div class="panel-body">
+              <p>Match: <span id="w-sat-match"></span></p>
+              <p>No Match: <span id="w-sat-noM"></span></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="panel panel-info">
+            <div class="panel-heading" style="color: #3B4650; background-color: #D8D1CD;">
+              <h3 class="panel-title text-center">Calories</h3>
+            </div>
+            <div class="panel-body">
+              <p>Match: <span id="w-cal-match"></span></p>
+              <p>No Match: <span id="w-cal-noM"></span></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="panel panel-warning">
+            <div class="panel-heading" style="color: #3B4650; background-color: #D8D1CD;">
+              <h3 class="panel-title text-center">Sodium</h3>
+            </div>
+            <div class="panel-body">
+              <p>Match: <span id="w-sod-match"></span></p>
+              <p>No Match: <span id="w-sod-noM"></span></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="panel panel-danger">
+            <div class="panel-heading" style="color: #3B4650; background-color: #D8D1CD;">
+              <h3 class="panel-title text-center">Sugar</h3>
+            </div>
+            <div class="panel-body">
+              <p>Coming Soon ...</p>
+<!--              <p>Match: <span id="w-sug-match"></span></p>-->
+<!--              <p>No Match: <span id="w-sug-noM"></span></p>-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div id="w-plot" class="col-md-6"
+             style="display: flex; justify-content: center">
+
+        </div>
+        <div id="w-plot2" class="col-md-6"
+             style="display: flex; justify-content: center"></div>
+      </div>
+
+    </div>
+  </section>
+
+
+
+<!--  <table id="table" class="table"></table>-->
+
+  <py-script src="./python/validation_2.py">
 <!--    pyscript.write('print', "Let's compute π:")-->
 <!--    def compute_pi(n):-->
 <!--        pi = 2-->
