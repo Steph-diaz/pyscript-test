@@ -6,7 +6,7 @@ import numpy as np
 to_drop = ['id', 'created', 'modified', 'product_code', 'id_x', 'created_x', 'modified_x', 'category_id',
            'id_y', 'created_y', 'modified_y']
 
-df = pd.read_csv('loblaws-mintel_upc_duplicates.csv').drop(columns=to_drop)
+df = pd.read_csv('data/loblaws-mintel_upc_duplicates.csv').drop(columns=to_drop)
 mintel = df.loc[df['store'] == 'MINTEL'].sort_values(by='upc_code').reset_index(drop=True)
 loblaws = df.loc[df['store'] == 'LOBLAWS'].sort_values(by='upc_code').reset_index(drop=True)
 

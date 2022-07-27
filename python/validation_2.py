@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-match_df = pd.read_csv('Matches(name_incl)_loblaws-mintel_upc_duplicates.csv')
+match_df = pd.read_csv('july22_nutrient_matches_loblaws-mintel_upc_dup.csv')
 
 # **************************** LOBLAWS DATA ***************************
 x = match_df.head(3)
@@ -34,8 +34,13 @@ sodium_nomatch = len(match_df[match_df['sodium_exact_match'] == False])
 pyscript.write('sod-match', sodium_match)
 pyscript.write('sod-noM', sodium_nomatch)
 
-plot_data = {'match': [satfat_match, calories_match, sodium_match], 'no match': [satfat_nomatch, calories_nomatch, sodium_nomatch]}
-satfat = pd.DataFrame(plot_data, index = ['sat_fat', 'calories', 'sodium'])
+sugar_match  = len(match_df[match_df['sugar_exact_match'] == True])
+sugar_nomatch = len(match_df[match_df['sugar_exact_match'] == False])
+pyscript.write('sug-match', sugar_match)
+pyscript.write('sug-noM', sugar_nomatch)
+
+# plot_data = {'match': [satfat_match, calories_match, sodium_match], 'no match': [satfat_nomatch, calories_nomatch, sodium_nomatch]}
+# satfat = pd.DataFrame(plot_data, index = ['sat_fat', 'calories', 'sodium'])
 
 ###### Pandas ploting does seem to work
 # pyscript.write('plot', satfat.plot.bar(rot=0))
@@ -43,16 +48,16 @@ satfat = pd.DataFrame(plot_data, index = ['sat_fat', 'calories', 'sodium'])
 
 
 # Bar Plot --------------------------------------------------------
-labels = ['Serv. Size', 'Sat Fat', 'Calories', 'Sodium']
-match = [size_match, satfat_match, calories_match, sodium_match]
-no_match = [size_nomatch, satfat_nomatch, calories_nomatch, sodium_nomatch]
+labels = ['Serv. Size', 'Sat Fat', 'Calories', 'Sodium', 'Sugar']
+match = [size_match, satfat_match, calories_match, sodium_match, sugar_match]
+no_match = [size_nomatch, satfat_nomatch, calories_nomatch, sodium_nomatch, sugar_nomatch]
 
 x = np.arange(len(labels))  # the label locations
 width = 0.25  # the width of the bars
 
 fig, ax = plt.subplots()
-rects1 = ax.bar(x - width/2, match, width, label='Match', color='forestgreen')
-rects2 = ax.bar(x + width/2, no_match, width, label='No Match', color='darkred')
+rects1 = ax.bar(x - width/1.75, match, width, label='Match', color='forestgreen')
+rects2 = ax.bar(x + width/1.75, no_match, width, label='No Match', color='darkred')
 
 # Add some text for labels, title and custom x-axis tick labels, etc.
 ax.set_ylabel('# of Products')
@@ -71,7 +76,12 @@ ax.bar_label(rects2, padding=3)
 fig.set_figheight(5)
 fig.set_figwidth(5)
 
-fig.tight_layout()
+# fig.tight_layout()
+box = ax.get_position()
+ax.set_position([box.x0, box.y0 + box.height * 0.1,
+                 box.width, box.height * 0.9])
+ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.07),
+          ncol=3, fancybox=True, shadow=True)
 
 # plt.show()
 pyscript.write('plot', fig)
@@ -80,7 +90,7 @@ pyscript.write('plot', fig)
 # PORCENTAGES
 
 ## Creating porcentages for loblaws
-total_match_loblaws = 1857
+total_match_loblaws = 1251  # 1857
 
 # Serving size
 lob_percent_size_match = round((size_match / total_match_loblaws)*100, 2)
