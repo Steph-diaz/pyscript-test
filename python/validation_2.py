@@ -56,8 +56,8 @@ x = np.arange(len(labels))  # the label locations
 width = 0.25  # the width of the bars
 
 fig, ax = plt.subplots()
-rects1 = ax.bar(x - width/1.75, match, width, label='Match', color='forestgreen')
-rects2 = ax.bar(x + width/1.75, no_match, width, label='No Match', color='darkred')
+rects1 = ax.bar(x - width/1.75, match, width, label='Match', color='#6fcb9f')
+rects2 = ax.bar(x + width/1.75, no_match, width, label='No Match', color='#d64525')
 
 # Add some text for labels, title and custom x-axis tick labels, etc.
 ax.set_ylabel('# of Products')
@@ -70,8 +70,8 @@ ax.spines['right'].set_visible(False)
 # ax.spines['bottom'].set_visible(False)
 # ax.spines['left'].set_visible(False)
 
-ax.bar_label(rects1, padding=3)
-ax.bar_label(rects2, padding=3)
+ax.bar_label(rects1, padding=3, color='grey', fontsize=8)
+ax.bar_label(rects2, padding=3, color='grey', fontsize=8)
 
 fig.set_figheight(5)
 fig.set_figwidth(5)
@@ -89,7 +89,7 @@ pyscript.write('plot', fig)
 # ------------------------------------------------------------------------------
 # PORCENTAGES
 
-## Creating porcentages for loblaws
+# Creating porcentages for loblaws
 total_match_loblaws = 1251  # 1857
 
 # Serving size
@@ -107,6 +107,10 @@ lob_percent_sat_nomatch = round((satfat_nomatch / total_match_loblaws)*100, 2)
 # saturated fat
 lob_percent_sod_match = round((sodium_match / total_match_loblaws)*100, 2)
 lob_percent_sod_nomatch = round((sodium_nomatch / total_match_loblaws)*100, 2)
+
+# sugar
+lob_percent_sug_match = round((sugar_match / total_match_loblaws)*100, 2)
+lob_percent_sug_nomatch = round((sugar_nomatch / total_match_loblaws)*100, 2)
 
 # Donut plots for percentages -------------------------------------------
 
@@ -187,13 +191,31 @@ p = plt.gcf()
 p.gca().add_artist(my_circle)
 plt.title('Sodium', color='k')
 
+# Data for plot 5 ----
+match_name = 'Match: ' + str(lob_percent_sug_match) + '%'
+nomatch_name = 'No Match: ' + str(lob_percent_sug_nomatch) + '%'
+
+names = [match_name, nomatch_name]
+size = [lob_percent_sug_match, lob_percent_sug_nomatch]
+
+my_circle = plt.Circle((0, 0), 0.7, color='white')
+
+# position 4
+plt.subplot(3, 2, 5)
+plt.rcParams['text.color'] = 'grey'
+plt.rcParams['font.size'] = '8.5'
+plt.pie(size, labels=names, colors=['forestgreen', 'darkred'],
+        wedgeprops={'linewidth': 7, 'edgecolor': 'white'}, labeldistance=1.2)
+p = plt.gcf()
+p.gca().add_artist(my_circle)
+plt.title('Sugar', color='k')
 
 plt.subplots_adjust(left=0.2,
                     bottom=0.2,
                     right=0.8,
                     top=0.9,
                     wspace=0.9,
-                    hspace=0.4)
+                    hspace=0.5)
 
 # plt.figure(figsize=(3, 3))
 pyscript.write('plot2', p)
@@ -235,8 +257,8 @@ x = np.arange(len(labels))  # the label locations
 width = 0.25  # the width of the bars
 
 fig, ax = plt.subplots()
-rects1 = ax.bar(x - width/2, w_match, width, label='Match', color='forestgreen')
-rects2 = ax.bar(x + width/2, w_no_match, width, label='No Match', color='darkred')
+rects1 = ax.bar(x - width/2, w_match, width, label='Match', color='#6fcb9f')
+rects2 = ax.bar(x + width/2, w_no_match, width, label='No Match', color='#d64525')
 
 # Add some text for labels, title and custom x-axis tick labels, etc.
 ax.set_ylabel('# of Products')
