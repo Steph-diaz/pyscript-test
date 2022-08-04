@@ -186,7 +186,7 @@ plt.subplot(3, 2, 4)
 plt.rcParams['text.color'] = 'grey'
 plt.rcParams['font.size'] = '8.5'
 plt.pie(size, labels=names, colors=['forestgreen', 'darkred'],
-        wedgeprops={'linewidth': 7, 'edgecolor': 'white'}, labeldistance=0.9)
+        wedgeprops={'linewidth': 7, 'edgecolor': 'white'})
 p = plt.gcf()
 p.gca().add_artist(my_circle)
 plt.title('Sodium', color='k')
@@ -205,7 +205,7 @@ plt.subplot(3, 2, 5)
 plt.rcParams['text.color'] = 'grey'
 plt.rcParams['font.size'] = '8.5'
 plt.pie(size, labels=names, colors=['forestgreen', 'darkred'],
-        wedgeprops={'linewidth': 7, 'edgecolor': 'white'}, labeldistance=1.2)
+        wedgeprops={'linewidth': 7, 'edgecolor': 'white'})
 p = plt.gcf()
 p.gca().add_artist(my_circle)
 plt.title('Sugar', color='k')
@@ -221,7 +221,7 @@ plt.subplots_adjust(left=0.2,
 pyscript.write('plot2', p)
 
 # ************************* WALMART ***************************************
-w_match_df = pd.read_csv('Matches(name_incl)_walmart-mintel_upc_duplicates.csv')
+w_match_df = pd.read_csv('july22_nutrient_matches_walmart-mintel_upc_dup.csv')
 
 w_size_match = len(w_match_df[w_match_df['serving_size_raw_exact_match']==True])
 w_size_nomatch = len(w_match_df[w_match_df['serving_size_raw_exact_match']==False])
@@ -243,26 +243,31 @@ w_sodium_nomatch = len(w_match_df[w_match_df['sodium_exact_match'] == False])
 pyscript.write('w-sod-match', w_sodium_match)
 pyscript.write('w-sod-noM', w_sodium_nomatch)
 
+w_sugar_match = len(w_match_df[w_match_df['sugar_exact_match'] == True])
+w_sugar_nomatch = len(w_match_df[w_match_df['sugar_exact_match'] == False])
+pyscript.write('w-sug-match', w_sugar_match)
+pyscript.write('w-sug-noM', w_sugar_nomatch)
+
 # Pandas plot
-w_plot_data = {'match': [w_size_match, w_satfat_match, w_calories_match, w_sodium_match], 'no match': [w_size_nomatch, w_satfat_nomatch, w_calories_nomatch, w_sodium_nomatch]}
-w_plot_df = pd.DataFrame(w_plot_data, index = ['Serving Size', 'sat_fat', 'calories', 'sodium'])
+# w_plot_data = {'match': [w_size_match, w_satfat_match, w_calories_match, w_sodium_match], 'no match': [w_size_nomatch, w_satfat_nomatch, w_calories_nomatch, w_sodium_nomatch]}
+# w_plot_df = pd.DataFrame(w_plot_data, index = ['Serving Size', 'sat_fat', 'calories', 'sodium'])
 
 
 # Bar Plot --------------------------------------------------------
-labels = ['Serv. Size', 'Sat Fat', 'Calories', 'Sodium']
-w_match = [w_size_match, w_satfat_match, w_calories_match, w_sodium_match]
-w_no_match = [w_size_nomatch, w_satfat_nomatch, w_calories_nomatch, w_sodium_nomatch]
+labels = ['Serv. Size', 'Sat Fat', 'Calories', 'Sodium', 'Sugar']
+w_match = [w_size_match, w_satfat_match, w_calories_match, w_sodium_match, w_sugar_match]
+w_no_match = [w_size_nomatch, w_satfat_nomatch, w_calories_nomatch, w_sodium_nomatch, w_sugar_nomatch]
 
 x = np.arange(len(labels))  # the label locations
 width = 0.25  # the width of the bars
 
 fig, ax = plt.subplots()
-rects1 = ax.bar(x - width/2, w_match, width, label='Match', color='#6fcb9f')
-rects2 = ax.bar(x + width/2, w_no_match, width, label='No Match', color='#d64525')
+rects1 = ax.bar(x - width/1.75, w_match, width, label='Match', color='#6fcb9f')
+rects2 = ax.bar(x + width/1.75, w_no_match, width, label='No Match', color='#d64525')
 
 # Add some text for labels, title and custom x-axis tick labels, etc.
 ax.set_ylabel('# of Products')
-ax.set_title('Walmart vs Mintel', pad=20, color='k')
+ax.set_title('Walmart vs Mintel', pad=20, color='black')
 ax.set_xticks(x, labels)
 ax.legend()
 
@@ -271,13 +276,18 @@ ax.spines['right'].set_visible(False)
 # ax.spines['bottom'].set_visible(False)
 # ax.spines['left'].set_visible(False)
 
-ax.bar_label(rects1, padding=3)
-ax.bar_label(rects2, padding=3)
+ax.bar_label(rects1, padding=3, color='grey', fontsize=8)
+ax.bar_label(rects2, padding=3, color='grey', fontsize=8)
 
 fig.set_figheight(5)
 fig.set_figwidth(5)
 
-fig.tight_layout()
+# fig.tight_layout()
+box = ax.get_position()
+ax.set_position([box.x0, box.y0 + box.height * 0.1,
+                 box.width, box.height * 0.9])
+ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.07),
+          ncol=3, fancybox=True, shadow=True)
 
 # plt.show()
 pyscript.write('w-plot', fig)
@@ -305,7 +315,9 @@ wal_percent_sat_nomatch = round((w_satfat_nomatch / total_match_walmart)*100, 2)
 wal_percent_sod_match = round((w_sodium_match / total_match_walmart)*100, 2)
 wal_percent_sod_nomatch = round((w_sodium_nomatch / total_match_walmart)*100, 2)
 
-
+# sugar
+wal_percent_sug_match = round((w_sugar_match / total_match_walmart)*100, 2)
+wal_percent_sug_nomatch = round((w_sugar_nomatch / total_match_walmart)*100, 2)
 
 # Donut plots for percentages -------------------------------------------
 
@@ -385,6 +397,25 @@ plt.pie(size, labels=names, colors=['forestgreen', 'darkred'],
 p = plt.gcf()
 p.gca().add_artist(my_circle)
 plt.title('Sodium', color='k')
+
+# Data for plot 5 ----
+match_name = 'Match: ' + str(wal_percent_sod_match) + '%'
+nomatch_name = 'No Match: ' + str(wal_percent_sod_nomatch) + '%'
+
+names = [match_name, nomatch_name]
+size = [wal_percent_sug_match, wal_percent_sug_nomatch]
+
+my_circle = plt.Circle((0, 0), 0.7, color='white')
+
+# position 5
+plt.subplot(3, 2, 5)
+plt.rcParams['text.color'] = 'grey'
+plt.rcParams['font.size'] = '8.5'
+plt.pie(size, labels=names, colors=['forestgreen', 'darkred'],
+        wedgeprops={'linewidth': 7, 'edgecolor': 'white'})
+p = plt.gcf()
+p.gca().add_artist(my_circle)
+plt.title('Sugar', color='k')
 
 
 plt.subplots_adjust(left=0.2,
